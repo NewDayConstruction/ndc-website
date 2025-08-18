@@ -60,7 +60,7 @@ const STRINGS = {
       title: "Let’s get you a quote",
       sub: "Tell us about your project and we’ll follow up same-day.",
       name: "Your name", email: "Email", phone: "Phone", message: "What do you need done?", submit: "Send",
-      at: "Find us", address: "1407 S Tripp Ave, Chicago, IL 60623", phoneLabel: "Call", emailLabel: "Email"
+      at: "Find us", phoneLabel: "Call", emailLabel: "Email"
     },
     footer: { rights: "All rights reserved.", built: "Made with ♥ in Chicago" }
   },
