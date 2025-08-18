@@ -38,7 +38,7 @@ const STRINGS = {
         { icon: <Sun className="h-6 w-6" />, title: "Solar — Design, Sales & Installation",
           bullets: ["Illinois Solar for All (ILSFA) Approved Vendor", "Roof- & ground-mount, batteries, interconnection", "Site assessments, incentives & permitting"] },
         { icon: <Hammer className="h-6 w-6" />, title: "Construction — Repairs & Build-outs",
-          bullets: ["Framing, drywall, finish & carpentry", "Insurance & punch-list repairs", "GC support for small developments"] }
+          bullets: [ "Insurance & punch-list repairs", "GC support for small developments"] }
       ]
     },
     creds: {
