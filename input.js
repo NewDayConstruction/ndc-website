@@ -1,0 +1,1 @@
+export function Input({className="",...p}){return <input className={`h-11 w-full rounded-xl border border-zinc-300 px-3 focus:outline-none focus:ring focus:ring-zinc-200 ${className}`} {...p}/>;}
