@@ -1,9 +1,8 @@
-
+// app/projects/page.js
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
 
-const CATS = ["Construction","HVAC","Solar"];
+import { useState } from "react";
+import Image from "next/image";
 
 const IMAGES = {
   Construction: [
@@ -11,16 +10,17 @@ const IMAGES = {
     "/projects/construction/after_RE.jpg",
   ],
   HVAC: [
-    "/projects/hvac/hvac-condenser.jpg",
-    "/projects/hvac/furnace-before.jpg",
-    "/projects/hvac/furnace-after.jpg",
-    "/projects/hvac/ducts-attic.jpg",
-    "/projects/hvac/ducts-vertical-run.jpg",
-    "/projects/hvac/gibson-furnace-open.jpg",
-    "/projects/hvac/rheem-high-eff.jpg",
-    "/projects/hvac/rheem-legacy.jpg",
-    "/projects/hvac/rheem-furnace-front.jpg",
-    "/projects/hvac/schematics.jpg",
+    // add/remove to match EXACT file names in /public/projects/hvac
+    "/projects/hvac/ACcondenser.jpg",
+    "/projects/hvac/carrier_codeV.jpg",
+    "/projects/hvac/carrier_DoneR.jpg",
+    "/projects/hvac/ductwork.jpg",
+    "/projects/hvac/ductwork_returnsupply.jpg",
+    "/projects/hvac/GIBSON.jpg",
+    "/projects/hvac/rheem.jpg",
+    "/projects/hvac/rheem_OG.jpg",
+    "/projects/hvac/RHEEM_rheem.jpg",
+    "/projects/hvac/Schematics.jpg",
   ],
   Solar: [
     "/projects/solar/front_solar.jpg",
@@ -29,51 +29,75 @@ const IMAGES = {
   ],
 };
 
-export default function Projects(){
-  const [cat, setCat] = useState("Construction");
-  const [lightbox, setLightbox] = useState({ open:false, idx:0 });
+export default function ProjectsPage() {
+  const tabs = Object.keys(IMAGES);
+  const [active, setActive] = useState(tabs[0]);
+  const [lightbox, setLightbox] = useState(null);
 
-  const list = IMAGES[cat];
-  const open = (i)=> setLightbox({open:true, idx:i});
-  const close = ()=> setLightbox({open:false, idx:0});
-  const prev = ()=> setLightbox(s=>({open:true, idx:(s.idx-1+list.length)%list.length}));
-  const next = ()=> setLightbox(s=>({open:true, idx:(s.idx+1)%list.length}));
+  const images = IMAGES[active].filter(Boolean);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10">
-      <h1 className="text-3xl font-bold tracking-tight mb-6">Projects</h1>
+    <main className="max-w-6xl mx-auto px-4 py-12">
+      <h1 className="text-3xl md:text-4xl font-semibold mb-6">Our Work</h1>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 mb-6">
-        {CATS.map(c => (
-          <button key={c} onClick={()=>setCat(c)}
-            className={`rounded-full px-4 py-2 text-sm border ${c===cat ? "bg-zinc-900 text-white border-zinc-900" : "border-zinc-300 hover:bg-zinc-50"}`}>
-            {c}
+      <div className="flex gap-2 mb-8">
+        {tabs.map((t) => (
+          <button
+            key={t}
+            onClick={() => setActive(t)}
+            className={`px-4 py-2 rounded-full border ${
+              active === t
+                ? "bg-black text-white border-black"
+                : "bg-white text-black hover:bg-gray-100"
+            }`}
+          >
+            {t}
           </button>
         ))}
       </div>
 
       {/* Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map((src,i)=>(
-          <button key={i} onClick={()=>open(i)} className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-            <Image src={src} alt="" fill className="object-cover transition-transform duration-300 group-hover:scale-105" sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" priority={i<3}/>
-          </button>
-        ))}
-      </div>
+      {images.length === 0 ? (
+        <p>No photos found in <code>/public/projects/{active.toLowerCase()}</code>.</p>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {images.map((src) => (
+            <button
+              key={src}
+              className="relative aspect-[4/3] rounded-lg overflow-hidden border"
+              onClick={() => setLightbox(src)}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="(max-width:768px) 50vw, 33vw"
+                style={{ objectFit: "cover" }}
+                priority={true}
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Lightbox */}
-      {lightbox.open && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
-          <button onClick={close} className="absolute inset-0" aria-label="Close overlay"></button>
-          <div className="relative w-[90vw] h-[80vh]" role="dialog" aria-modal="true">
-            <Image src={list[lightbox.idx]} alt="" fill className="object-contain" />
-            <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full px-3 py-2">‹</button>
-            <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full px-3 py-2">›</button>
-            <button onClick={close} className="absolute top-2 right-2 bg-white/80 rounded-full px-3 py-2">✕</button>
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <div className="relative w-full max-w-5xl aspect-[4/3]">
+            <Image
+              src={lightbox}
+              alt=""
+              fill
+              sizes="100vw"
+              style={{ objectFit: "contain" }}
+            />
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }
