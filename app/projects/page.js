@@ -1,9 +1,9 @@
 // app/projects/page.js
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
+// EXACT filenames and paths in your repo
 const PHOTOS = {
   Construction: [
     "/projects/construction/before_RE.jpg",
@@ -33,23 +33,28 @@ export default function ProjectsPage() {
   const [active, setActive] = useState(tabs[0]);
   const [lightbox, setLightbox] = useState(null);
 
-  const images = PHOTOS[active] || [];
+  const imgs = (PHOTOS[active] || []).filter(Boolean);
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-3xl md:text-4xl font-semibold mb-6">Our Work</h1>
+    <main style={{maxWidth: 1100, margin: "0 auto", padding: "3rem 1rem"}}>
+      <h1 style={{fontSize: "1.875rem", fontWeight: 600, marginBottom: "1rem"}}>
+        Our Work
+      </h1>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {tabs.map((t) => (
+      <div style={{display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24}}>
+        {tabs.map(t => (
           <button
             key={t}
             onClick={() => setActive(t)}
-            className={`px-4 py-2 rounded-full border transition ${
-              active === t
-                ? "bg-black text-white border-black"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 9999,
+              border: "1px solid #000",
+              background: active === t ? "#000" : "#fff",
+              color: active === t ? "#fff" : "#000",
+              cursor: "pointer"
+            }}
           >
             {t}
           </button>
@@ -57,25 +62,36 @@ export default function ProjectsPage() {
       </div>
 
       {/* Grid */}
-      {images.length === 0 ? (
-        <p className="text-gray-600">
-          No photos found in <code>/public/projects/{active.toLowerCase()}</code>.
-        </p>
+      {imgs.length === 0 ? (
+        <p>No photos found in <code>/public/projects/{active.toLowerCase()}</code>.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {images.map((src) => (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat( auto-fill, minmax(240px, 1fr) )",
+            gap: 12
+          }}
+        >
+          {imgs.map(src => (
             <button
               key={src}
               onClick={() => setLightbox(src)}
-              className="relative aspect-[4/3] overflow-hidden rounded-lg border"
+              style={{
+                border: "1px solid #e5e7eb",
+                borderRadius: 12,
+                padding: 0,
+                overflow: "hidden",
+                cursor: "zoom-in",
+                background: "#fff"
+              }}
+              title={src}
             >
-              <Image
+              <img
                 src={src}
                 alt=""
-                fill
-                sizes="(max-width:768px) 50vw, 33vw"
-                style={{ objectFit: "cover" }}
-                priority
+                loading="eager"
+                decoding="async"
+                style={{display: "block", width: "100%", height: "auto"}}
               />
             </button>
           ))}
@@ -85,21 +101,26 @@ export default function ProjectsPage() {
       {/* Lightbox */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
           onClick={() => setLightbox(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,.8)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+            zIndex: 50,
+            cursor: "zoom-out"
+          }}
         >
-          <div className="relative w-full max-w-5xl aspect-[4/3]">
-            <Image
-              src={lightbox}
-              alt=""
-              fill
-              sizes="100vw"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
+          <img
+            src={lightbox}
+            alt=""
+            style={{maxWidth: "100%", maxHeight: "90vh"}}
+          />
         </div>
       )}
     </main>
   );
 }
-
