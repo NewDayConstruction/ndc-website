@@ -7,7 +7,7 @@ import { ArrowRight, Phone, Mail, MapPin, Leaf, Sun, Wrench, Hammer, Building2, 
 // ---- Simple i18n helper ----------------------------------------------------
 const copy = {
   en: {
-    nav: { services: "Services", projects: "Projects", about: "About", contact: "Contact" },
+    nav: { services: "Services", projects: "Projects", about: "About", contact: "Contact" };
     hero: {
       kicker: "Solar • HVAC • Construction",
       title: "Powering homes and small businesses across Chicago",
@@ -37,7 +37,7 @@ const copy = {
         {
           icon: <Hammer className="w-6 h-6" />,
           title: "General Construction",
-          desc: "Small projects: carpentry, doors, decks, punch‑list, insurance repairs with clear scopes and timelines.",
+          desc: "Small projects:"insurance repairs with clear scopes and timelines.",
         },
       ],
     },
@@ -107,27 +107,48 @@ const copy = {
       title: "Proyectos Recientes",
       note: "Obras reales en Chicago — pronto subiremos más fotos.",
     },
-    {/* ===== WORK GALLERY (same page) ===== */}
+ {/* ===== WORK GALLERY (same page) ===== */}
 <section id="work" className="bg-neutral-50">
   <div className="max-w-6xl mx-auto px-4 py-14">
     <h2 className="text-2xl md:text-3xl font-bold">See our work</h2>
-    <p className="mt-2 text-neutral-600">HVAC, solar, and construction projects across Chicagoland.</p>
+    <p className="mt-2 text-neutral-600">
+      HVAC, solar, and construction projects across Chicagoland.
+    </p>
 
-    [{ title: "HVAC", base: "/projects/hvac", files: [
-        "hvac1.jpg", "hvac2.jpg" // <- usa los nombres reales de tus fotos
-      ]},
-      { title: "Solar", base: "/projects/solar", files: [
-        "solar1.jpg", "solar2.jpg"
-      ]},
-      { title: "Construction", base: "/projects/construction", files: [
-        "construction1.jpg", "construction2.jpg"
-      ]},
+    {[
+      {
+        title: "HVAC",
+        base: "/projects/hvac",
+        files: [
+          "ducts-attic.jpg",
+          "ducts-vertical-run.jpg"
+        ],
+      },
+      {
+        title: "Solar",
+        base: "/projects/solar",
+        files: [
+          "after_RE.jpg",
+          "before_RE.jpg"
+        ],
+      },
+      {
+        title: "Construction",
+        base: "/projects/construction",
+        files: [
+          "badge.jpg",
+          "card.jpg"
+        ],
+      },
     ].map((cat, idx) => (
       <div key={idx} className={idx === 0 ? "mt-8" : "mt-12"}>
         <h3 className="mb-3 font-semibold">{cat.title}</h3>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {cat.files.map((name, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden border border-neutral-200 bg-white">
+            <div
+              key={i}
+              className="rounded-2xl overflow-hidden border border-neutral-200 bg-white"
+            >
               <img
                 src={`${cat.base}/${name}`}
                 alt={`${cat.title} ${i + 1}`}
@@ -141,6 +162,7 @@ const copy = {
     ))}
   </div>
 </section>
+
 
     about: {
       title: "Hecho para nuestra comunidad",
