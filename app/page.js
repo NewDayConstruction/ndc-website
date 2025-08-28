@@ -190,7 +190,7 @@ export default function Page() {
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#services" className="hover:underline">{t.nav.services}</a>
-            <a href="#projects" className="hover:underline">{t.nav.projects}</a>
+            <a href="#work" className="hover:underline">{t.nav.projects}</a>
             <a href="#about" className="hover:underline">{t.nav.about}</a>
             <a href="#contact" className="hover:underline">{t.nav.contact}</a>
           </nav>
