@@ -1,580 +1,365 @@
-import React, { useMemo, useState } from "react";
+"use client";
+
+import React from "react";
 import { motion } from "framer-motion";
-import {
-  Sun,
-  Snowflake,
-  Hammer,
-  Phone,
-  Mail,
-  MapPin,
-  ArrowRight,
-  CheckCircle2,
-  Building2,
-  Wrench,
-  Sparkles,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Phone, Mail, MapPin, Leaf, Sun, Wrench, Hammer, Building2, CheckCircle2 } from "lucide-react";
 
-/**
- * NEW DAY CONSTRUCTION LLC – Single-file website
- * Framework: React (works in Next.js App Router as a page component)
- * Styling: TailwindCSS + shadcn/ui + framer-motion + lucide-react icons
- *
- * How to use in Next.js:
- *   1) Ensure Tailwind + shadcn/ui are configured.
- *   2) Create a file at app/page.tsx (or any route) and paste this code.
- *   3) Replace placeholder images/links with your own. Deploy on Vercel.
- *
- * Tips:
- * - All section IDs match nav anchors for smooth scrolling.
- * - Update CONTACT_INFO and PARTNERS with your real details.
- */
-
-const CONTACT_INFO = {
-  phone: "+1-773-699-7266",
-  email: "NewDayConstruction606@gmail.com",
-  address: "Chicago, IL",
-};
-
-const PARTNERS = [
-  { name: "Powur PBC", href: "https://powur.com" },
-  { name: "Tesla Energy", href: "https://www.tesla.com/energy" },
-  { name: "EnFin", href: "https://www.enfin.com" },
-  { name: "HACIA", href: "https://www.haciaworks.org" },
-  { name: "PNCC", href: "https://pilsenneighbors.org" },
-];
-
-const PROJECTS = [
-  {
-    title: "South Side Solar – 6.4 kW",
-    tag: "Solar",
-    img: "https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Boiler Swap + Tune",
-    tag: "HVAC",
-    img: "https://images.unsplash.com/photo-1581092921461-cd7e040f64f5?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Kitchen Refresh",
-    tag: "Construction",
-    img: "https://images.unsplash.com/photo-1505798577917-a65157d3320a?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Rooftop HVAC – RTU",
-    tag: "HVAC",
-    img: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "West Loop Solar – 9.8 kW",
-    tag: "Solar",
-    img: "https://images.unsplash.com/photo-1505731132164-cca903381e86?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Deck + Overhang",
-    tag: "Construction",
-    img: "https://images.unsplash.com/photo-1507081323647-4d250478b919?q=80&w=1200&auto=format&fit=crop",
-  },
-];
-
-const T = {
+// ---- Simple i18n helper ----------------------------------------------------
+const copy = {
   en: {
-    nav: {
-      services: "Services",
-      projects: "Projects",
-      partners: "Partners",
-      contact: "Contact",
-    },
+    nav: { services: "Services", projects: "Projects", about: "About", contact: "Contact" },
     hero: {
-      eyebrow: "Chicago • Licensed • Community‑driven",
-      title: "Solar, HVAC & Construction — done right.",
+      kicker: "Solar • HVAC • Construction",
+      title: "Powering homes and small businesses across Chicago",
       subtitle:
-        "New Day Construction LLC delivers reliable installs, smart retrofits, and responsive service across Chicagoland.",
+        "New Day Construction LLC is a community‑rooted, licensed contractor delivering solar installs, HVAC service, and light construction—done right, safely, and on time.",
       ctaPrimary: "Get a quote",
-      ctaSecondary: "See projects",
+      ctaSecondary: "See our work",
+    },
+    badges: {
+      licensed: "Licensed & Insured",
+      icc: "ICC DG • HVAC • GC",
+      vendor: "Illinois Solar for All Approved Vendor",
     },
     services: {
-      title: "What we do",
-      solar: {
-        title: "Solar Installation",
-        bullets: [
-          "Residential & light commercial",
-          "Design, permitting, interconnection",
-          "Battery/backup ready",
-        ],
-      },
-      hvac: {
-        title: "HVAC Service",
-        bullets: [
-          "AC tune‑ups & diagnostics",
-          "Furnace/boiler repair",
-          "Load calcs & right‑sizing",
-        ],
-      },
-      construction: {
-        title: "General Construction",
-        bullets: [
-          "Carpentry & small remodels",
-          "Decks, doors, finishes",
-          "Insurance repair scope",
-        ],
-      },
+      title: "What We Do",
+      items: [
+        {
+          icon: <Sun className="w-6 h-6" />, 
+          title: "Solar Installations",
+          desc: "Residential PV design & install, battery backup (Powerwall), interconnection and incentives guidance.",
+        },
+        {
+          icon: <Wrench className="w-6 h-6" />,
+          title: "HVAC",
+          desc: "Tune‑ups, diagnostics, repair & replacement. Manual J/S sizing, airflow balancing, and maintenance plans.",
+        },
+        {
+          icon: <Hammer className="w-6 h-6" />,
+          title: "General Construction",
+          desc: "Small projects: carpentry, doors, decks, punch‑list, insurance repairs with clear scopes and timelines.",
+        },
+      ],
     },
-    projects: { title: "Recent work", filterAll: "All" },
-    partners: { title: "Partners & Networks" },
+    projects: {
+      title: "Recent Projects",
+      note: "Real projects from the West & South Sides — more photos coming soon.",
+    },
+    about: {
+      title: "Built for our community",
+      body:
+        "We are a Chicago‑based contractor partnering with neighbors, builders, and nonprofits to deliver energy savings and skilled jobs. As a Powur Enterprise Partner and Tesla Powerwall installer, we bring quality gear and warranties with a local, respectful approach.",
+      bullets: [
+        "Bilingual team (English/Español)",
+        "Transparent pricing & written scopes",
+        "Permits, inspections, and utility coordination handled",
+      ],
+    },
     contact: {
-      title: "Let’s build your project",
-      subtitle:
-        "Tell us a bit about your home or business. We’ll respond with options and next steps.",
+      title: "Let’s talk",
+      subtitle: "Tell us about your project and timeline. We’ll reply the same day.",
       name: "Name",
       email: "Email",
       phone: "Phone",
       message: "Project details",
-      send: "Send message",
-      direct: "Or reach us directly",
+      submit: "Send",
     },
     footer: {
-      about:
-        "Licensed: ICC Distributed Generation (DG), HVAC Licensed, General Contractor (GC). Serving Chicago & suburbs.",
-      rights: "© " + new Date().getFullYear() + " New Day Construction LLC. All rights reserved.",
+      rights: "All rights reserved.",
     },
   },
   es: {
-    nav: {
-      services: "Servicios",
-      projects: "Proyectos",
-      partners: "Aliados",
-      contact: "Contacto",
-    },
+    nav: { services: "Servicios", projects: "Proyectos", about: "Acerca de", contact: "Contacto" },
     hero: {
-      eyebrow: "Chicago • Con licencias • Enfocados en la comunidad",
-      title: "Solar, HVAC y Construcción — bien hechos.",
+      kicker: "Solar • HVAC • Construcción",
+      title: "Energía y confort para hogares y negocios en Chicago",
       subtitle:
-        "New Day Construction LLC realiza instalaciones confiables, mejoras inteligentes y servicio rápido en Chicago y alrededores.",
+        "New Day Construction LLC es un contratista con raíces comunitarias que instala solar, sirve HVAC y ejecuta proyectos de construcción—con seguridad, calidad y a tiempo.",
       ctaPrimary: "Pedir cotización",
-      ctaSecondary: "Ver proyectos",
+      ctaSecondary: "Ver trabajos",
+    },
+    badges: {
+      licensed: "Licenciados y Asegurados",
+      icc: "ICC DG • HVAC • GC",
+      vendor: "Proveedor Aprobado de Illinois Solar for All",
     },
     services: {
-      title: "Qué hacemos",
-      solar: {
-        title: "Instalación Solar",
-        bullets: [
-          "Residencial y comercial ligero",
-          "Diseño, permisos e interconexión",
-          "Listo para baterías/respaldo",
-        ],
-      },
-      hvac: {
-        title: "Servicio HVAC",
-        bullets: [
-          "Mantenimientos y diagnósticos",
-          "Reparación de hornos/calderas",
-          "Cálculos de carga y tamaño correcto",
-        ],
-      },
-      construction: {
-        title: "Construcción General",
-        bullets: [
-          "Carpintería y remodelaciones pequeñas",
-          "Decks, puertas y acabados",
-          "Reparaciones por seguro",
-        ],
-      },
+      title: "Servicios",
+      items: [
+        {
+          icon: <Sun className="w-6 h-6" />, 
+          title: "Instalaciones Solares",
+          desc: "Diseño e instalación residencial, baterías (Powerwall), interconexión y apoyo con incentivos.",
+        },
+        {
+          icon: <Wrench className="w-6 h-6" />,
+          title: "HVAC",
+          desc: "Mantenimientos, diagnósticos, reparación y reemplazo. Cálculo Manual J/S, balanceo de aire y planes.",
+        },
+        {
+          icon: <Hammer className="w-6 h-6" />,
+          title: "Construcción General",
+          desc: "Proyectos pequeños: carpintería, puertas, decks, reparaciones de seguro con alcances claros.",
+        },
+      ],
     },
-    projects: { title: "Trabajos recientes", filterAll: "Todos" },
-    partners: { title: "Aliados y Redes" },
+    projects: {
+      title: "Proyectos Recientes",
+      note: "Obras reales en Chicago — pronto subiremos más fotos.",
+    },
+    about: {
+      title: "Hecho para nuestra comunidad",
+      body:
+        "Somos un contratista de Chicago que colabora con vecinos, constructores y organizaciones para generar ahorros de energía y empleos calificados. Como socio de Powur y instalador de Tesla Powerwall, ofrecemos equipos y garantías de calidad con trato local y respetuoso.",
+      bullets: [
+        "Equipo bilingüe (English/Español)",
+        "Precios transparentes y alcances por escrito",
+        "Permisos, inspecciones y coordinación con la utility",
+      ],
+    },
     contact: {
-      title: "Hagamos tu proyecto",
-      subtitle:
-        "Cuéntanos sobre tu casa o negocio. Te responderemos con opciones y próximos pasos.",
+      title: "Hablemos",
+      subtitle: "Cuéntanos tu proyecto y tiempos. Respondemos el mismo día.",
       name: "Nombre",
       email: "Correo",
       phone: "Teléfono",
       message: "Detalles del proyecto",
-      send: "Enviar mensaje",
-      direct: "O contáctanos directo",
+      submit: "Enviar",
     },
     footer: {
-      about:
-        "Licencias: ICC DG (Generación Distribuida), Licencia HVAC, Contratista General (GC). Atendemos Chicago y suburbios.",
-      rights: "© " + new Date().getFullYear() + " New Day Construction LLC. Todos los derechos reservados.",
+      rights: "Todos los derechos reservados.",
     },
   },
-} as const;
+};
 
-type LangKey = keyof typeof T;
+function cx() {
+  return Array.from(arguments).filter(Boolean).join(" ");
+}
 
-const Section = ({ id, children }: { id?: string; children: React.ReactNode }) => (
-  <section id={id} className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">{children}</section>
-);
-
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a href={href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-    {children}
-  </a>
-);
-
-export default function NDCWebsite() {
-  const [lang, setLang] = useState<LangKey>("en");
-  const t = T[lang];
-  const [filter, setFilter] = useState<string>("All");
-
-  const tags = useMemo(() => [t.projects.filterAll, "Solar", "HVAC", "Construction"], [lang]);
-  const filtered = useMemo(
-    () =>
-      PROJECTS.filter((p) => (filter === "All" || filter === "Todos") ? true : p.tag === filter),
-    [filter]
-  );
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+export default function Page() {
+  const [lang, setLang] = React.useState("en");
+  const t = copy[lang];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
-      {/* Top Bar */}
-      <div className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-        <Section>
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-5 w-5" />
-              <span className="font-semibold tracking-tight">New Day Construction LLC</span>
-              <Badge variant="secondary" className="hidden sm:inline">Chicago, IL</Badge>
-            </div>
-
-            <div className="hidden md:flex items-center gap-6">
-              <NavLink href="#services">{t.nav.services}</NavLink>
-              <NavLink href="#projects">{t.nav.projects}</NavLink>
-              <NavLink href="#partners">{t.nav.partners}</NavLink>
-              <NavLink href="#contact">{t.nav.contact}</NavLink>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Button size="sm" variant={lang === "en" ? "default" : "secondary"} onClick={() => setLang("en")}>EN</Button>
-              <Button size="sm" variant={lang === "es" ? "default" : "secondary"} onClick={() => setLang("es")}>ES</Button>
+    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+      {/* Top bar */}
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Leaf className="w-7 h-7" />
+            <div>
+              <div className="font-semibold leading-tight">New Day Construction LLC</div>
+              <div className="text-xs text-neutral-500">Solar • HVAC • Construction</div>
             </div>
           </div>
-        </Section>
-      </div>
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <a href="#services" className="hover:underline">{t.nav.services}</a>
+            <a href="#projects" className="hover:underline">{t.nav.projects}</a>
+            <a href="#about" className="hover:underline">{t.nav.about}</a>
+            <a href="#contact" className="hover:underline">{t.nav.contact}</a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <button
+              className={cx(
+                "px-3 py-1.5 rounded-full text-xs border",
+                lang === "en" ? "bg-black text-white border-black" : "bg-white border-neutral-300"
+              )}
+              onClick={() => setLang("en")}
+            >EN</button>
+            <button
+              className={cx(
+                "px-3 py-1.5 rounded-full text-xs border",
+                lang === "es" ? "bg-black text-white border-black" : "bg-white border-neutral-300"
+              )}
+              onClick={() => setLang("es")}
+            >ES</button>
+          </div>
+        </div>
+      </header>
 
       {/* Hero */}
-      <Section>
-        <div className="relative overflow-hidden mt-8 rounded-2xl bg-gradient-to-br from-amber-200/30 via-sky-200/30 to-emerald-200/30 border">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center opacity-20" />
-          <div className="relative grid md:grid-cols-2 gap-8 p-8 sm:p-12">
-            <div>
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="text-xs uppercase tracking-widest text-muted-foreground">
-                {t.hero.eyebrow}
-              </motion.p>
-              <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight">
-                {t.hero.title}
-              </motion.h1>
-              <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mt-4 text-lg text-muted-foreground">
-                {t.hero.subtitle}
-              </motion.p>
-              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-6 flex flex-wrap gap-3">
-                <Button onClick={() => scrollTo("contact")}>{t.hero.ctaPrimary} <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                <Button variant="secondary" onClick={() => scrollTo("projects")}>{t.hero.ctaSecondary}</Button>
-              </motion.div>
+      <section className="relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+              <div className="text-sm uppercase tracking-wide text-green-700 font-semibold">{t.hero.kicker}</div>
+              <h1 className="mt-3 text-3xl md:text-5xl font-extrabold leading-tight">{t.hero.title}</h1>
+              <p className="mt-4 text-neutral-600 md:text-lg">{t.hero.subtitle}</p>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-black text-white font-medium shadow-sm">
+                  {t.hero.ctaPrimary}
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a href="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-neutral-300 bg-white font-medium">
+                  {t.hero.ctaSecondary}
+                </a>
+              </div>
+            </motion.div>
 
-              <div className="mt-8 grid grid-cols-3 gap-4">
-                {[
-                  { k: "Projects", v: "150+" },
-                  { k: "Years", v: "10+" },
-                  { k: "5‑Star", v: "Dozens" },
-                ].map((s, i) => (
-                  <Card key={i} className="border-dashed">
-                    <CardContent className="p-4">
-                      <p className="text-xs text-muted-foreground">{s.k}</p>
-                      <p className="text-2xl font-semibold">{s.v}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+            {/* Badges */}
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Badge title={t.badges.licensed} subtitle={t.badges.icc} />
+              <Badge title={t.badges.vendor} subtitle="Approved May 2025" />
+              <Badge title="Powur Enterprise Partner" subtitle="Tesla Powerwall installs" />
+            </div>
+          </div>
+
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} className="relative">
+            <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-neutral-200 to-neutral-100 shadow-inner" />
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow p-4 border border-neutral-200 flex items-center gap-3">
+              <Building2 className="w-6 h-6" />
+              <div className="text-sm">
+                <div className="font-semibold">Chicago Service Area</div>
+                <div className="text-neutral-500">City & near suburbs</div>
               </div>
             </div>
-
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="flex items-center">
-              <Card className="w-full shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5" /> IL Licensed & Insured</CardTitle>
-                  <CardDescription>
-                    ICC Distributed Generation (DG), HVAC, and General Contractor qualifications for clean energy and building work.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="flex items-start gap-3">
-                    <Sun className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Solar</p>
-                      <p className="text-sm text-muted-foreground">Rooftop PV, battery‑ready, interconnection</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Snowflake className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">HVAC</p>
-                      <p className="text-sm text-muted-foreground">Tune‑ups, diagnostics, replacements</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Hammer className="h-5 w-5" />
-                    <div>
-                      <p className="font-medium">Construction</p>
-                      <p className="text-sm text-muted-foreground">Carpentry, finishes, small remodels</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+          </motion.div>
         </div>
-      </Section>
+      </section>
 
       {/* Services */}
-      <Section id="services">
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold tracking-tight">{t.services.title}</h2>
-          <p className="text-muted-foreground mt-2">Solar • HVAC • Construction</p>
-
-          <div className="grid md:grid-cols-3 gap-6 mt-8">
-            <ServiceCard
-              icon={<Sun className="h-5 w-5" />}
-              title={t.services.solar.title}
-              bullets={t.services.solar.bullets}
-            />
-            <ServiceCard
-              icon={<Snowflake className="h-5 w-5" />}
-              title={t.services.hvac.title}
-              bullets={t.services.hvac.bullets}
-            />
-            <ServiceCard
-              icon={<Hammer className="h-5 w-5" />}
-              title={t.services.construction.title}
-              bullets={t.services.construction.bullets}
-            />
+      <section id="services" className="bg-white border-y border-neutral-200">
+        <div className="max-w-6xl mx-auto px-4 py-14">
+          <h2 className="text-2xl md:text-3xl font-bold">{t.services.title}</h2>
+          <div className="mt-6 grid md:grid-cols-3 gap-6">
+            {t.services.items.map((s, i) => (
+              <div key={i} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="w-10 h-10 rounded-2xl bg-neutral-100 flex items-center justify-center">{s.icon}</div>
+                <div className="mt-4 font-semibold text-lg">{s.title}</div>
+                <p className="mt-2 text-neutral-600 text-sm">{s.desc}</p>
+                <ul className="mt-4 space-y-2 text-sm text-neutral-600">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Permits, inspections, utility interconnect</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Warranties & documentation</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Clean job sites & respect for tenants</li>
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-      </Section>
+      </section>
 
       {/* Projects */}
-      <Section id="projects">
-        <div className="mt-16">
-          <div className="flex items-end justify-between gap-4 flex-wrap">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">{t.projects.title}</h2>
-              <p className="text-muted-foreground mt-2">Selected installs & upgrades</p>
-            </div>
-            <div className="flex gap-2">
-              {tags.map((tg) => (
-                <Button key={tg} size="sm" variant={(filter === tg) ? "default" : "secondary"} onClick={() => setFilter(tg)}>
-                  {tg}
-                </Button>
+      <section id="projects" className="bg-neutral-50">
+        <div className="max-w-6xl mx-auto px-4 py-14">
+          <h2 className="text-2xl md:text-3xl font-bold">{t.projects.title}</h2>
+          <p className="mt-2 text-neutral-600">{t.projects.note}</p>
+          <div className="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {[1,2,3,4,5,6].map((i) => (
+              <div key={i} className="rounded-3xl overflow-hidden border border-neutral-200 bg-white">
+                <div className="aspect-video bg-neutral-200" />
+                <div className="p-4">
+                  <div className="font-semibold">Project #{i}</div>
+                  <div className="text-sm text-neutral-600">Short description — scope, location, outcome.</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="bg-white border-y border-neutral-200">
+        <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-10">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold">{t.about.title}</h2>
+            <p className="mt-4 text-neutral-700">{t.about.body}</p>
+            <ul className="mt-5 space-y-2 text-neutral-700">
+              {t.about.bullets.map((b, i) => (
+                <li key={i} className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 mt-0.5" /> {b}</li>
               ))}
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6">
+            <h3 className="font-semibold">Credentials</h3>
+            <div className="mt-3 grid sm:grid-cols-2 gap-3 text-sm">
+              <Cred label="ICC Distributed Generator (DG)" />
+              <Cred label="HVAC License" />
+              <Cred label="General Contractor (GC)" />
+              <Cred label="ILSFA Approved Vendor (May 2025)" />
+              <Cred label="Powur Enterprise Partner" />
+              <Cred label="Tesla Powerwall Installer" />
             </div>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {filtered.map((p, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
-                <Card className="overflow-hidden group">
-                  <div className="aspect-[16/10] bg-muted relative">
-                    <img src={p.img} alt={p.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]" />
-                  </div>
-                  <CardHeader className="p-4">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-base">{p.title}</CardTitle>
-                      <Badge>{p.tag}</Badge>
-                    </div>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
         </div>
-      </Section>
-
-      {/* Partners */}
-      <Section id="partners">
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold tracking-tight">{t.partners.title}</h2>
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {PARTNERS.map((p) => (
-              <a key={p.name} href={p.href} target="_blank" rel="noreferrer" className="rounded-xl border p-4 text-center hover:bg-muted transition-colors">
-                <span className="font-medium">{p.name}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </Section>
+      </section>
 
       {/* Contact */}
-      <Section id="contact">
-        <div className="mt-16">
-          <div className="grid lg:grid-cols-2 gap-8">
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-3xl">{t.contact.title}</CardTitle>
-                <CardDescription>{t.contact.subtitle}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form
-                  className="grid gap-4"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const form = e.currentTarget as HTMLFormElement;
-                    const fd = new FormData(form);
-                    const msg = encodeURIComponent(
-                      `Name: ${fd.get("name")}\nEmail: ${fd.get("email")}\nPhone: ${fd.get("phone")}\nMessage: ${fd.get("message")}`
-                    );
-                    window.location.href = `mailto:${CONTACT_INFO.email}?subject=New%20Project%20Inquiry&body=${msg}`;
-                  }}
-                >
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium">{t.contact.name}</label>
-                      <Input name="name" required placeholder="Jane Doe" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">{t.contact.email}</label>
-                      <Input type="email" name="email" required placeholder="jane@email.com" />
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium">{t.contact.phone}</label>
-                      <Input name="phone" placeholder="(773) 555‑0123" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Service</label>
-                      <select name="service" className="w-full h-10 rounded-md border bg-background px-3 text-sm">
-                        <option>Solar</option>
-                        <option>HVAC</option>
-                        <option>Construction</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium">{t.contact.message}</label>
-                    <Textarea name="message" rows={5} placeholder="Roof age, square footage, goals, timeline…" />
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button type="submit" className="">{t.contact.send}</Button>
-                    <span className="text-sm text-muted-foreground">{t.contact.direct}:</span>
-                    <a href={`tel:${CONTACT_INFO.phone}`} className="inline-flex items-center gap-1 text-sm font-medium hover:underline">
-                      <Phone className="h-4 w-4" /> {CONTACT_INFO.phone}
-                    </a>
-                    <a href={`mailto:${CONTACT_INFO.email}`} className="inline-flex items-center gap-1 text-sm font-medium hover:underline">
-                      <Mail className="h-4 w-4" /> {CONTACT_INFO.email}
-                    </a>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
+      <section id="contact" className="bg-neutral-50">
+        <div className="max-w-6xl mx-auto px-4 py-14">
+          <h2 className="text-2xl md:text-3xl font-bold">{t.contact.title}</h2>
+          <p className="mt-2 text-neutral-600">{t.contact.subtitle}</p>
 
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle>Visit / Service Area</CardTitle>
-                <CardDescription>We’re based in Chicago and serve nearby suburbs.</CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5" />
-                  <div>
-                    <p className="font-medium">{CONTACT_INFO.address}</p>
-                    <p className="text-sm text-muted-foreground">Chicagoland • Cook County • Surrounding areas</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <FeaturePill icon={<Building2 className="h-4 w-4" />} text="Licensed & Insured" />
-                  <FeaturePill icon={<Wrench className="h-4 w-4" />} text="Pro Install Crew" />
-                  <FeaturePill icon={<Sun className="h-4 w-4" />} text="Clean Energy" />
-                  <FeaturePill icon={<Snowflake className="h-4 w-4" />} text="Comfort First" />
-                </div>
-                <div className="rounded-xl overflow-hidden border">
-                  <img
-                    src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop"
-                    alt="Chicago skyline"
-                    className="w-full h-56 object-cover"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          <div className="mt-6 grid md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-4" onSubmit={(e) => e.preventDefault()}>
+                <label className="text-sm">
+                  {t.contact.name}
+                  <input className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="Jane Doe" />
+                </label>
+                <label className="text-sm">
+                  {t.contact.email}
+                  <input type="email" className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="jane@email.com" />
+                </label>
+                <label className="text-sm">
+                  {t.contact.phone}
+                  <input className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="773‑000‑0000" />
+                </label>
+                <label className="text-sm md:col-span-2">
+                  {t.contact.message}
+                  <textarea className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 min-h-[120px]" placeholder="Roof size, equipment age, or job scope…" />
+                </label>
+                <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black text-white px-5 py-3 font-medium">
+                  {t.contact.submit} <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+            </div>
+
+            <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm space-y-4">
+              <div className="flex items-start gap-3"><Phone className="w-5 h-5 mt-1" /> <div>
+                <div className="font-semibold">Call/Text</div>
+                <div className="text-neutral-600">773‑699‑7266</div>
+              </div></div>
+              <div className="flex items-start gap-3"><Mail className="w-5 h-5 mt-1" /> <div>
+                <div className="font-semibold">Email</div>
+                <div className="text-neutral-600">NewDayConstruction606@gmail.com</div>
+              </div></div>
+              <div className="flex items-start gap-3"><MapPin className="w-5 h-5 mt-1" /> <div>
+                <div className="font-semibold">Office</div>
+                <div className="text-neutral-600">1407 S Tripp Ave, Chicago, IL</div>
+              </div></div>
+            </div>
           </div>
         </div>
-      </Section>
+      </section>
 
       {/* Footer */}
-      <footer className="mt-20 border-t">
-        <Section>
-          <div className="py-10 grid md:grid-cols-2 gap-6">
-            <div>
-              <p className="font-semibold">New Day Construction LLC</p>
-              <p className="text-sm text-muted-foreground mt-1">{T[lang].footer.about}</p>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 md:justify-end">
-              <a href={`tel:${CONTACT_INFO.phone}`} className="inline-flex items-center gap-2 hover:underline">
-                <Phone className="h-4 w-4" /> {CONTACT_INFO.phone}
-              </a>
-              <a href={`mailto:${CONTACT_INFO.email}`} className="inline-flex items-center gap-2 hover:underline">
-                <Mail className="h-4 w-4" /> {CONTACT_INFO.email}
-              </a>
-              <a href="#contact" className="inline-flex items-center gap-2 hover:underline">
-                <ArrowRight className="h-4 w-4" /> {T[lang].nav.contact}
-              </a>
-            </div>
+      <footer className="bg-white border-t border-neutral-200">
+        <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-neutral-600 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div>© {new Date().getFullYear()} New Day Construction LLC. {t.footer.rights}</div>
+          <div className="flex items-center gap-4">
+            <a href="#contact" className="hover:underline">{t.nav.contact}</a>
+            <a href="#projects" className="hover:underline">{t.nav.projects}</a>
           </div>
-          <div className="pb-10 text-xs text-muted-foreground">{T[lang].footer.rights}</div>
-        </Section>
+        </div>
       </footer>
     </div>
   );
 }
 
-function ServiceCard({
-  icon,
-  title,
-  bullets,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  bullets: string[];
-}) {
+function Badge({ title, subtitle }) {
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-xl">{icon} {title}</CardTitle>
-        <CardDescription>Quality work • Clear communication • Fair pricing</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="space-y-2">
-          {bullets.map((b, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm">
-              <CheckCircle2 className="h-4 w-4 mt-0.5" />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+    <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+      <div className="text-sm font-semibold">{title}</div>
+      {subtitle && <div className="text-xs text-neutral-500 mt-0.5">{subtitle}</div>}
+    </div>
   );
 }
 
-function FeaturePill({ icon, text }: { icon: React.ReactNode; text: string }) {
+function Cred({ label }) {
   return (
-    <div className="flex items-center gap-2 rounded-full border px-3 py-2 text-sm">
-      {icon}
-      <span>{text}</span>
+    <div className="flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2">
+      <CheckCircle2 className="w-4 h-4" />
+      <span>{label}</span>
     </div>
   );
 }
