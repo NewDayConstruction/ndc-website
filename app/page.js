@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Check, MapPin, Mail, Phone, Hammer, Sun, Wind, Facebook, Linkedin, Shield, FileCheck2, Building2, Globe, Languages } from "lucide-react";
 
 // --- Replace with your live form handler later (e.g., Formspree, API route) ---
@@ -161,7 +162,7 @@ const STRINGS = {
   }
 };
 
-export default function NewDayConstructionSite() {
+export default function Page() {
   const [lang, setLang] = useState("en");
   const t = useMemo(() => STRINGS[lang], [lang]);
 
@@ -260,24 +261,40 @@ export default function NewDayConstructionSite() {
         <section id="work" className="bg-white">
           <div className="mx-auto max-w-7xl px-4 py-16">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-8">{lang === "en" ? "See our work" : "Nuestros proyectos"}</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { img: "https://images.unsplash.com/photo-1581093588401-16b7c2c9c387?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "HVAC installation" : "Instalación HVAC" },
-                { img: "https://images.unsplash.com/photo-1581094467397-26b204fe0c31?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "Rooftop solar" : "Solar en techo" },
-                { img: "https://images.unsplash.com/photo-1601074321646-3df4b2e2d7b2?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "Ductwork & IAQ" : "Ductos y calidad de aire" },
-                { img: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "Mini-split heat pump" : "Mini-split bomba de calor" },
-                { img: "https://images.unsplash.com/photo-1481277542470-605612bd2d61?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "Deck repair" : "Reparación de deck" },
-                { img: "https://images.unsplash.com/photo-1617195737496-7e9c2cc7b5d0?q=80&w=1200&auto=format&fit=crop", title: lang === "en" ? "Battery backup" : "Batería de respaldo" },
-              ].map((item, i) => (
-                <Card key={i} className="rounded-2xl overflow-hidden">
-                  <div className="aspect-[4/3] bg-zinc-100" style={{ backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                  <CardContent className="p-4 text-sm text-zinc-700 flex items-center justify-between">
-                    <span>{item.title}</span>
-                    <Button variant="outline" size="sm" className="rounded-xl">{lang === "en" ? "Details" : "Detalles"}</Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+
+            <Tabs defaultValue="hvac" className="w-full">
+              <TabsList className="mb-6">
+                <TabsTrigger value="hvac">HVAC</TabsTrigger>
+                <TabsTrigger value="solar">Solar</TabsTrigger>
+                <TabsTrigger value="construction">{lang === "en" ? "Construction" : "Construcción"}</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="hvac">
+                <GalleryGrid items={[
+                  { img: "/projects/hvac-01.jpg", title: lang === "en" ? "Furnace swap + tune" : "Cambio de horno + ajuste" },
+                  { img: "/projects/hvac-02.jpg", title: lang === "en" ? "AC install" : "Instalación de A/C" },
+                  { img: "/projects/hvac-03.jpg", title: lang === "en" ? "Ductwork upgrade" : "Mejora de ductos" },
+                ]} />
+              </TabsContent>
+
+              <TabsContent value="solar">
+                <GalleryGrid items={[
+                  { img: "/projects/solar-01.jpg", title: lang === "en" ? "Rooftop array" : "Arreglo en techo" },
+                  { img: "/projects/solar-02.jpg", title: lang === "en" ? "Ground-mount" : "Montaje en suelo" },
+                  { img: "/projects/solar-03.jpg", title: lang === "en" ? "Battery backup" : "Batería de respaldo" },
+                ]} />
+              </TabsContent>
+
+              <TabsContent value="construction">
+                <GalleryGrid items={[
+                  { img: "/projects/construction-01.jpg", title: lang === "en" ? "Deck repair" : "Reparación de deck" },
+                  { img: "/projects/construction-02.jpg", title: lang === "en" ? "Drywall & finish" : "Drywall y acabados" },
+                  { img: "/projects/construction-03.jpg", title: lang === "en" ? "Carpentry" : "Carpintería" },
+                ]} />
+              </TabsContent>
+            </Tabs>
+
+            <p className="text-xs text-zinc-500 mt-2">Tip: place your photos in <code>/public/projects</code> with the names used above, or change the paths here.</p>
           </div>
         </section>
 
@@ -374,6 +391,25 @@ export default function NewDayConstructionSite() {
         </footer>
       </div>
     </MotionConfig>
+  );
+}
+
+function GalleryGrid({ items = [] }) {
+  return (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((item, i) => (
+        <Card key={i} className="rounded-2xl overflow-hidden">
+          <div
+            className="aspect-[4/3] bg-zinc-100"
+            style={{ backgroundImage: `url(${item.img})`, backgroundSize: "cover", backgroundPosition: "center" }}
+          />
+          <CardContent className="p-4 text-sm text-zinc-700 flex items-center justify-between">
+            <span>{item.title}</span>
+            <Button variant="outline" size="sm" className="rounded-xl">Details</Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
   );
 }
 
