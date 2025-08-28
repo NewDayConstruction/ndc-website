@@ -99,7 +99,7 @@ const copy = {
         {
           icon: <Hammer className="w-6 h-6" />,
           title: "Construcción General",
-          desc: "Proyectos pequeños: carpintería, puertas, decks, reparaciones de seguro con alcances claros.",
+          desc: "Proyectos: "reparaciones de seguro con alcances claros.",
         },
       ],
     },
@@ -107,6 +107,42 @@ const copy = {
       title: "Proyectos Recientes",
       note: "Obras reales en Chicago — pronto subiremos más fotos.",
     },
+    {/* ===== WORK GALLERY (same page) ===== */}
+<section id="work" className="bg-neutral-50">
+  <div className="max-w-6xl mx-auto px-4 py-14">
+    <h2 className="text-2xl md:text-3xl font-bold">See our work</h2>
+    <p className="mt-2 text-neutral-600">HVAC, solar, and construction projects across Chicagoland.</p>
+
+    {[
+      { title: "HVAC", base: "/projects/hvac", files: [
+        "hvac1.jpg", "hvac2.jpg" // <- usa los nombres reales de tus fotos
+      ]},
+      { title: "Solar", base: "/projects/solar", files: [
+        "solar1.jpg", "solar2.jpg"
+      ]},
+      { title: "Construction", base: "/projects/construction", files: [
+        "construction1.jpg", "construction2.jpg"
+      ]},
+    ].map((cat, idx) => (
+      <div key={idx} className={idx === 0 ? "mt-8" : "mt-12"}>
+        <h3 className="mb-3 font-semibold">{cat.title}</h3>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {cat.files.map((name, i) => (
+            <div key={i} className="rounded-2xl overflow-hidden border border-neutral-200 bg-white">
+              <img
+                src={`${cat.base}/${name}`}
+                alt={`${cat.title} ${i + 1}`}
+                className="w-full h-56 object-cover"
+                loading={i < 3 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
     about: {
       title: "Hecho para nuestra comunidad",
       body:
@@ -190,7 +226,7 @@ export default function Page() {
                   {t.hero.ctaPrimary}
                   <ArrowRight className="w-4 h-4" />
                 </a>
-                <a href="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-neutral-300 bg-white font-medium">
+                <a #work="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-neutral-300 bg-white font-medium">
                   {t.hero.ctaSecondary}
                 </a>
               </div>
