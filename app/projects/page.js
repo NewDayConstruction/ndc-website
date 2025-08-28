@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 // EXACT filenames and paths in your repo
 const PHOTOS = {
@@ -36,14 +37,24 @@ export default function ProjectsPage() {
   const imgs = (PHOTOS[active] || []).filter(Boolean);
 
   return (
-    <main style={{maxWidth: 1100, margin: "0 auto", padding: "3rem 1rem"}}>
-      <h1 style={{fontSize: "1.875rem", fontWeight: 600, marginBottom: "1rem"}}>
+    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "3rem 1rem" }}>
+      {/* Back button */}
+      <div style={{ marginBottom: 16 }}>
+        <Link
+          href="/"
+          className="inline-flex items-center px-4 py-2 rounded-full border border-black text-black hover:bg-black hover:text-white"
+        >
+          ← Back to Home
+        </Link>
+      </div>
+
+      <h1 style={{ fontSize: "1.875rem", fontWeight: 600, marginBottom: "1rem" }}>
         Our Work
       </h1>
 
       {/* Tabs */}
-      <div style={{display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24}}>
-        {tabs.map(t => (
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+        {tabs.map((t) => (
           <button
             key={t}
             onClick={() => setActive(t)}
@@ -53,7 +64,7 @@ export default function ProjectsPage() {
               border: "1px solid #000",
               background: active === t ? "#000" : "#fff",
               color: active === t ? "#fff" : "#000",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
             {t}
@@ -63,16 +74,18 @@ export default function ProjectsPage() {
 
       {/* Grid */}
       {imgs.length === 0 ? (
-        <p>No photos found in <code>/public/projects/{active.toLowerCase()}</code>.</p>
+        <p>
+          No photos found in <code>/public/projects/{active.toLowerCase()}</code>.
+        </p>
       ) : (
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat( auto-fill, minmax(240px, 1fr) )",
-            gap: 12
+            gap: 12,
           }}
         >
-          {imgs.map(src => (
+          {imgs.map((src) => (
             <button
               key={src}
               onClick={() => setLightbox(src)}
@@ -82,16 +95,16 @@ export default function ProjectsPage() {
                 padding: 0,
                 overflow: "hidden",
                 cursor: "zoom-in",
-                background: "#fff"
+                background: "#fff",
               }}
               title={src}
             >
               <img
                 src={src}
                 alt=""
-                loading="eager"
+                loading="lazy"
                 decoding="async"
-                style={{display: "block", width: "100%", height: "auto"}}
+                style={{ display: "block", width: "100%", height: "auto" }}
               />
             </button>
           ))}
@@ -111,16 +124,13 @@ export default function ProjectsPage() {
             justifyContent: "center",
             padding: 16,
             zIndex: 50,
-            cursor: "zoom-out"
+            cursor: "zoom-out",
           }}
         >
-          <img
-            src={lightbox}
-            alt=""
-            style={{maxWidth: "100%", maxHeight: "90vh"}}
-          />
+          <img src={lightbox} alt="" style={{ maxWidth: "100%", maxHeight: "90vh" }} />
         </div>
       )}
     </main>
   );
 }
+
