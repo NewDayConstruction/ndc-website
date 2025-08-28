@@ -113,8 +113,7 @@ const copy = {
     <h2 className="text-2xl md:text-3xl font-bold">See our work</h2>
     <p className="mt-2 text-neutral-600">HVAC, solar, and construction projects across Chicagoland.</p>
 
-    {[
-      { title: "HVAC", base: "/projects/hvac", files: [
+    [{ title: "HVAC", base: "/projects/hvac", files: [
         "hvac1.jpg", "hvac2.jpg" // <- usa los nombres reales de tus fotos
       ]},
       { title: "Solar", base: "/projects/solar", files: [
