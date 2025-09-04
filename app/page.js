@@ -296,38 +296,7 @@ export default function Page() {
                     key={i}
                     className="rounded-2xl overflow-hidden border border-neutral-200 bg-white"
                   >
-                    <img
-                      src={`${cat.base}/${name}`}
-                      alt={`${cat.title} ${i + 1}`}
-                      className="w-full h-56 object-cover"
-                      loading={i < 3 ? "eager" : "lazy"}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Projects (optional placeholder) */}
-      <section id="projects" className="bg-neutral-50">
-        <div className="max-w-6xl mx-auto px-4 py-14">
-          <h2 className="text-2xl md:text-3xl font-bold">{t.projects.title}</h2>
-          <p className="mt-2 text-neutral-600">{t.projects.note}</p>
-          <div className="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="rounded-3xl overflow-hidden border border-neutral-200 bg-white">
-                <div className="aspect-video bg-neutral-200" />
-                <div className="p-4">
-                  <div className="font-semibold">Project #{i}</div>
-                  <div className="text-sm text-neutral-600">Short description — scope, location, outcome.</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                    
 
       {/* About */}
       <section id="about" className="bg-white border-y border-neutral-200">
