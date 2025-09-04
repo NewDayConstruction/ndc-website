@@ -2,17 +2,28 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Phone, Mail, MapPin, Leaf, Sun, Wrench, Hammer, Building2, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  Phone,
+  Mail,
+  MapPin,
+  Leaf,
+  Sun,
+  Wrench,
+  Hammer,
+  Building2,
+  CheckCircle2,
+} from "lucide-react";
 
 // ---- Simple i18n helper ----------------------------------------------------
 const copy = {
   en: {
-    nav: { services: "Services", projects: "Projects", about: "About", contact: "Contact" };
+    nav: { services: "Services", projects: "Projects", about: "About", contact: "Contact" },
     hero: {
       kicker: "Solar • HVAC • Construction",
       title: "Powering homes and small businesses across Chicago",
       subtitle:
-        "New Day Construction LLC is a community‑rooted, licensed contractor delivering solar installs, HVAC service, and light construction—done right, safely, and on time.",
+        "New Day Construction LLC is a community-rooted, licensed contractor delivering solar installs, HVAC service, and light construction—done right, safely, and on time.",
       ctaPrimary: "Get a quote",
       ctaSecondary: "See our work",
     },
@@ -25,19 +36,19 @@ const copy = {
       title: "What We Do",
       items: [
         {
-          icon: <Sun className="w-6 h-6" />, 
+          icon: <Sun className="w-6 h-6" />,
           title: "Solar Installations",
           desc: "Residential PV design & install, battery backup (Powerwall), interconnection and incentives guidance.",
         },
         {
           icon: <Wrench className="w-6 h-6" />,
           title: "HVAC",
-          desc: "Tune‑ups, diagnostics, repair & replacement. Manual J/S sizing, airflow balancing, and maintenance plans.",
+          desc: "Tune-ups, diagnostics, repair & replacement. Manual J/S sizing, airflow balancing, and maintenance plans.",
         },
         {
           icon: <Hammer className="w-6 h-6" />,
           title: "General Construction",
-          desc: "Small projects:"insurance repairs with clear scopes and timelines.",
+          desc: "Small projects: carpentry, doors, decks, punch-list, and insurance repairs with clear scopes and timelines.",
         },
       ],
     },
@@ -48,7 +59,7 @@ const copy = {
     about: {
       title: "Built for our community",
       body:
-        "We are a Chicago‑based contractor partnering with neighbors, builders, and nonprofits to deliver energy savings and skilled jobs. As a Powur Enterprise Partner and Tesla Powerwall installer, we bring quality gear and warranties with a local, respectful approach.",
+        "We are a Chicago-based contractor partnering with neighbors, builders, and nonprofits to deliver energy savings and skilled jobs. As a Powur Enterprise Partner and Tesla Powerwall installer, we bring quality gear and warranties with a local, respectful approach.",
       bullets: [
         "Bilingual team (English/Español)",
         "Transparent pricing & written scopes",
@@ -64,9 +75,7 @@ const copy = {
       message: "Project details",
       submit: "Send",
     },
-    footer: {
-      rights: "All rights reserved.",
-    },
+    footer: { rights: "All rights reserved." },
   },
   es: {
     nav: { services: "Servicios", projects: "Proyectos", about: "Acerca de", contact: "Contacto" },
@@ -87,7 +96,7 @@ const copy = {
       title: "Servicios",
       items: [
         {
-          icon: <Sun className="w-6 h-6" />, 
+          icon: <Sun className="w-6 h-6" />,
           title: "Instalaciones Solares",
           desc: "Diseño e instalación residencial, baterías (Powerwall), interconexión y apoyo con incentivos.",
         },
@@ -99,7 +108,7 @@ const copy = {
         {
           icon: <Hammer className="w-6 h-6" />,
           title: "Construcción General",
-          desc: "Proyectos: "reparaciones de seguro con alcances claros.",
+          desc: "Proyectos pequeños: carpintería, puertas, decks y reparaciones de seguro con alcances claros.",
         },
       ],
     },
@@ -107,63 +116,6 @@ const copy = {
       title: "Proyectos Recientes",
       note: "Obras reales en Chicago — pronto subiremos más fotos.",
     },
- {/* ===== WORK GALLERY (same page) ===== */}
-<section id="work" className="bg-neutral-50">
-  <div className="max-w-6xl mx-auto px-4 py-14">
-    <h2 className="text-2xl md:text-3xl font-bold">See our work</h2>
-    <p className="mt-2 text-neutral-600">
-      HVAC, solar, and construction projects across Chicagoland.
-    </p>
-
-    {[
-      {
-        title: "HVAC",
-        base: "/projects/hvac",
-        files: [
-          "ducts-attic.jpg",
-          "ducts-vertical-run.jpg"
-        ],
-      },
-      {
-        title: "Solar",
-        base: "/projects/solar",
-        files: [
-          "after_RE.jpg",
-          "before_RE.jpg"
-        ],
-      },
-      {
-        title: "Construction",
-        base: "/projects/construction",
-        files: [
-          "badge.jpg",
-          "card.jpg"
-        ],
-      },
-    ].map((cat, idx) => (
-      <div key={idx} className={idx === 0 ? "mt-8" : "mt-12"}>
-        <h3 className="mb-3 font-semibold">{cat.title}</h3>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {cat.files.map((name, i) => (
-            <div
-              key={i}
-              className="rounded-2xl overflow-hidden border border-neutral-200 bg-white"
-            >
-              <img
-                src={`${cat.base}/${name}`}
-                alt={`${cat.title} ${i + 1}`}
-                className="w-full h-56 object-cover"
-                loading={i < 3 ? "eager" : "lazy"}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    ))}
-  </div>
-</section>
-
-
     about: {
       title: "Hecho para nuestra comunidad",
       body:
@@ -183,11 +135,9 @@ const copy = {
       message: "Detalles del proyecto",
       submit: "Enviar",
     },
-    footer: {
-      rights: "Todos los derechos reservados.",
-    },
+    footer: { rights: "Todos los derechos reservados." },
   },
-};
+}; // <-- copy object closed
 
 function cx() {
   return Array.from(arguments).filter(Boolean).join(" ");
@@ -222,14 +172,18 @@ export default function Page() {
                 lang === "en" ? "bg-black text-white border-black" : "bg-white border-neutral-300"
               )}
               onClick={() => setLang("en")}
-            >EN</button>
+            >
+              EN
+            </button>
             <button
               className={cx(
                 "px-3 py-1.5 rounded-full text-xs border",
                 lang === "es" ? "bg-black text-white border-black" : "bg-white border-neutral-300"
               )}
               onClick={() => setLang("es")}
-            >ES</button>
+            >
+              ES
+            </button>
           </div>
         </div>
       </header>
@@ -243,11 +197,17 @@ export default function Page() {
               <h1 className="mt-3 text-3xl md:text-5xl font-extrabold leading-tight">{t.hero.title}</h1>
               <p className="mt-4 text-neutral-600 md:text-lg">{t.hero.subtitle}</p>
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a href="#contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-black text-white font-medium shadow-sm">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-black text-white font-medium shadow-sm"
+                >
                   {t.hero.ctaPrimary}
                   <ArrowRight className="w-4 h-4" />
                 </a>
-                <a #work="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-neutral-300 bg-white font-medium">
+                <a
+                  href="#work"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-neutral-300 bg-white font-medium"
+                >
                   {t.hero.ctaSecondary}
                 </a>
               </div>
@@ -261,7 +221,12 @@ export default function Page() {
             </div>
           </div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} className="relative">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
             <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-neutral-200 to-neutral-100 shadow-inner" />
             <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow p-4 border border-neutral-200 flex items-center gap-3">
               <Building2 className="w-6 h-6" />
@@ -285,9 +250,15 @@ export default function Page() {
                 <div className="mt-4 font-semibold text-lg">{s.title}</div>
                 <p className="mt-2 text-neutral-600 text-sm">{s.desc}</p>
                 <ul className="mt-4 space-y-2 text-sm text-neutral-600">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Permits, inspections, utility interconnect</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Warranties & documentation</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Clean job sites & respect for tenants</li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4" /> Permits, inspections, utility interconnect
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4" /> Warranties & documentation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4" /> Clean job sites & respect for tenants
+                  </li>
                 </ul>
               </div>
             ))}
@@ -295,13 +266,48 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Projects */}
+      {/* ===== WORK GALLERY (same page) ===== */}
+      <section id="work" className="bg-neutral-50">
+        <div className="max-w-6xl mx-auto px-4 py-14">
+          <h2 className="text-2xl md:text-3xl font-bold">See our work</h2>
+          <p className="mt-2 text-neutral-600">
+            HVAC, solar, and construction projects across Chicagoland.
+          </p>
+
+          {[
+            { title: "HVAC", base: "/projects/hvac", files: ["ducts-attic.jpg", "ducts-vertical-run.jpg"] },
+            { title: "Solar", base: "/projects/solar", files: ["after_RE.jpg", "before_RE.jpg"] },
+            { title: "Construction", base: "/projects/construction", files: ["badge.jpg", "card.jpg"] },
+          ].map((cat, idx) => (
+            <div key={idx} className={idx === 0 ? "mt-8" : "mt-12"}>
+              <h3 className="mb-3 font-semibold">{cat.title}</h3>
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {cat.files.map((name, i) => (
+                  <div
+                    key={i}
+                    className="rounded-2xl overflow-hidden border border-neutral-200 bg-white"
+                  >
+                    <img
+                      src={`${cat.base}/${name}`}
+                      alt={`${cat.title} ${i + 1}`}
+                      className="w-full h-56 object-cover"
+                      loading={i < 3 ? "eager" : "lazy"}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Projects (optional placeholder) */}
       <section id="projects" className="bg-neutral-50">
         <div className="max-w-6xl mx-auto px-4 py-14">
           <h2 className="text-2xl md:text-3xl font-bold">{t.projects.title}</h2>
           <p className="mt-2 text-neutral-600">{t.projects.note}</p>
           <div className="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {[1,2,3,4,5,6].map((i) => (
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="rounded-3xl overflow-hidden border border-neutral-200 bg-white">
                 <div className="aspect-video bg-neutral-200" />
                 <div className="p-4">
@@ -322,7 +328,9 @@ export default function Page() {
             <p className="mt-4 text-neutral-700">{t.about.body}</p>
             <ul className="mt-5 space-y-2 text-neutral-700">
               {t.about.bullets.map((b, i) => (
-                <li key={i} className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 mt-0.5" /> {b}</li>
+                <li key={i} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 mt-0.5" /> {b}
+                </li>
               ))}
             </ul>
           </div>
@@ -355,15 +363,22 @@ export default function Page() {
                 </label>
                 <label className="text-sm">
                   {t.contact.email}
-                  <input type="email" className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="jane@email.com" />
+                  <input
+                    type="email"
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2"
+                    placeholder="jane@email.com"
+                  />
                 </label>
                 <label className="text-sm">
                   {t.contact.phone}
-                  <input className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="773‑000‑0000" />
+                  <input className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2" placeholder="773-000-0000" />
                 </label>
                 <label className="text-sm md:col-span-2">
                   {t.contact.message}
-                  <textarea className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 min-h-[120px]" placeholder="Roof size, equipment age, or job scope…" />
+                  <textarea
+                    className="mt-1 w-full rounded-xl border border-neutral-300 px-3 py-2 min-h-[120px]"
+                    placeholder="Roof size, equipment age, or job scope…"
+                  />
                 </label>
                 <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-black text-white px-5 py-3 font-medium">
                   {t.contact.submit} <ArrowRight className="w-4 h-4" />
@@ -372,18 +387,27 @@ export default function Page() {
             </div>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm space-y-4">
-              <div className="flex items-start gap-3"><Phone className="w-5 h-5 mt-1" /> <div>
-                <div className="font-semibold">Call/Text</div>
-                <div className="text-neutral-600">773‑699‑7266</div>
-              </div></div>
-              <div className="flex items-start gap-3"><Mail className="w-5 h-5 mt-1" /> <div>
-                <div className="font-semibold">Email</div>
-                <div className="text-neutral-600">NewDayConstruction606@gmail.com</div>
-              </div></div>
-              <div className="flex items-start gap-3"><MapPin className="w-5 h-5 mt-1" /> <div>
-                <div className="font-semibold">Office</div>
-                <div className="text-neutral-600">1407 S Tripp Ave, Chicago, IL</div>
-              </div></div>
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 mt-1" />{" "}
+                <div>
+                  <div className="font-semibold">Call/Text</div>
+                  <div className="text-neutral-600">773-699-7266</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 mt-1" />{" "}
+                <div>
+                  <div className="font-semibold">Email</div>
+                  <div className="text-neutral-600">NewDayConstruction606@gmail.com</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-1" />{" "}
+                <div>
+                  <div className="font-semibold">Office</div>
+                  <div className="text-neutral-600">1407 S Tripp Ave, Chicago, IL</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -392,10 +416,12 @@ export default function Page() {
       {/* Footer */}
       <footer className="bg-white border-t border-neutral-200">
         <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-neutral-600 flex flex-col md:flex-row items-center justify-between gap-3">
-          <div>© {new Date().getFullYear()} New Day Construction LLC. {t.footer.rights}</div>
+          <div>
+            © {new Date().getFullYear()} New Day Construction LLC. {t.footer.rights}
+          </div>
           <div className="flex items-center gap-4">
             <a href="#contact" className="hover:underline">{t.nav.contact}</a>
-            <a href="#projects" className="hover:underline">{t.nav.projects}</a>
+            <a href="#work" className="hover:underline">{t.nav.projects}</a>
           </div>
         </div>
       </footer>
