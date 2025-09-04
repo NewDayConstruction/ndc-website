@@ -1,4 +1,4 @@
-
+import "./globals.css";
 export const metadata = {
   title: "New Day Construction LLC — HVAC • Solar • Construction",
   description: "Build it right. Power it clean. HVAC, solar and general contracting in Chicago and suburbs.",
