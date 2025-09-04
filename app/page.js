@@ -222,7 +222,7 @@ export default function Page() {
           </div>
               
 <Image
-  src="/projects/construction/after_RE.jpg"
+  src="/projects/solar/roof_view.jpg"
   alt="Recent NDC project"
   width={1200}
   height={800}
