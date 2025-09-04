@@ -14,7 +14,7 @@ import {
   Building2,
   CheckCircle2,
 } from "lucide-react";
-
+import Image from "next/image";
 // ---- Simple i18n helper ----------------------------------------------------
 const copy = {
   en: {
@@ -220,6 +220,15 @@ export default function Page() {
               <Badge title="Powur Enterprise Partner" subtitle="Tesla Powerwall installs" />
             </div>
           </div>
+              
+<Image
+  src="/projects/construction/after_RE.jpg"
+  alt="Recent NDC project"
+  width={1200}
+  height={800}
+  style={{ width: "100%", height: "auto", borderRadius: 12, marginTop: 20 }}
+  priority
+/>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
