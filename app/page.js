@@ -415,8 +415,8 @@ export default function Page() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 mt-1" />{" "}
                 <div>
-                  <div className="font-semibold">Office</div>
-                  <div className="text-neutral-600"> Chicago, IL</div>
+                  <div className="font-semibold">FaceBook</div>
+                  <div className="text-neutral-600"> https://www.facebook.com/share/16sx3nwB4N/?mibextid=wwXIfr,</div>
                 </div>
               </div>
             </div>
