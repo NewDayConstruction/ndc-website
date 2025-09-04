@@ -3,13 +3,20 @@ import { useState } from "react";
 
 const PHOTOS = {
   Construction: [
-    "/projects/construction/before_RE.jpg",
-    "/projects/construction/after_RE.jpg",
+    "/before_RE.jpg",
+    "/after_RE.jpg",
   ],
   HVAC: [
-    "/projects/hvac/ACCondenser.jpg",
-    "/projects/hvac/GIBSON.jpg",
+    "/ACCondenser.jpg",
+    "/GIBSON.jpg",
+    "rheem-high-eff.jpg",
+    "/ducts-attic.jpg",
+    "/ducts-vertical-run.jpg",
   ],
+  SOLAR: [ 
+    "front_solar.jpg",
+    "solar.jpg",
+    ],
 };
 
 export default function Projects() {
