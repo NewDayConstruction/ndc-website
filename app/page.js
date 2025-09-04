@@ -1,3 +1,4 @@
+// app/page.js
 import Image from "next/image";
 
 export default function Home() {
@@ -6,33 +7,34 @@ export default function Home() {
       {/* Hero */}
       <section className="hero">
         <div>
-          <h1>Build it right. Power it clean.</h1>
+          <h1>Powering homes and small businesses across Chicago</h1>
           <p>
-            HVAC • Solar • General Contracting — serving Chicago & suburbs.
-            Licensed, insured, and community-rooted.
+            New Day Construction LLC is a community-rooted, licensed contractor
+            delivering solar installs, HVAC service, and construction—done right,
+            safely, and on time.
           </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
-            <a className="cta" href="/contact">Request a quote</a>
+          <div style={{ display:"flex", gap:12, marginTop:12 }}>
+            <a className="cta" href="/contact">Get a quote</a>
             <a className="btn" href="/projects">See our work</a>
           </div>
-          <div className="kpis" style={{ marginTop: 18 }}>
-            <div className="kpi"><strong>HVAC</strong><br />Installs & tune-ups</div>
-            <div className="kpi"><strong>Solar</strong><br />Design & install</div>
-            <div className="kpi"><strong>Construction</strong><br />Remodels & repairs</div>
+          <div className="kpis" style={{ marginTop:18 }}>
+            <div className="kpi"><strong>HVAC</strong><br/>Installs & tune-ups</div>
+            <div className="kpi"><strong>Solar</strong><br/>Design & install</div>
+            <div className="kpi"><strong>Construction</strong><br/>Remodels & repairs</div>
           </div>
         </div>
 
-        {/* Replace with your own image in /public if you like */}
+        {/* Uses existing /public/after_RE.jpg so no new uploads needed */}
         <div className="card">
           <Image
-            src="/projects/construction/after_RE.jpg"
+            src="/after_RE.jpg"
             alt="Recent NDC project"
             width={1200}
             height={800}
-            style={{ width: "100%", height: "auto", borderRadius: 12 }}
+            style={{ width:"100%", height:"auto", borderRadius:12 }}
             priority
           />
-          <p style={{ color: "#9ca3af", marginTop: 8 }}>
+          <p style={{ color:"#9ca3af", marginTop:8 }}>
             Ask about utility rebates and Illinois Solar for All.
           </p>
         </div>
@@ -63,9 +65,8 @@ export default function Home() {
         <div className="grid grid-2">
           <div className="card">
             <p>
-              New Day Construction LLC is a licensed Chicago contractor led by CEO Carlos Zaruma and
-              owner Jacqueline Salazar. We combine craftsmanship with clean energy expertise to deliver
-              safe, efficient projects for families and developers.
+              Led by CEO Carlos Zaruma and owner Jacqueline Salazar, NDC blends craftsmanship
+              with clean-energy expertise to deliver safe, efficient projects for families and developers.
             </p>
           </div>
           <div className="card">
@@ -73,7 +74,7 @@ export default function Home() {
               <li>Distributed Generator (DG) License</li>
               <li>HVAC Licensed</li>
               <li>General Contractor</li>
-              <li>Approved Vendor — Illinois Solar for All (2025)</li>
+              <li>Illinois Solar for All Approved Vendor (2025)</li>
             </ul>
           </div>
         </div>
@@ -82,15 +83,12 @@ export default function Home() {
       {/* CTA */}
       <section className="section">
         <div className="card" style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 12,
-          flexWrap: "wrap"
+          display:"flex", justifyContent:"space-between", alignItems:"center",
+          gap:12, flexWrap:"wrap"
         }}>
           <div>
-            <h3 style={{ margin: "0 0 6px" }}>Ready to start?</h3>
-            <p style={{ margin: 0, color: "#9ca3af" }}>
+            <h3 style={{ margin:"0 0 6px" }}>Ready to start?</h3>
+            <p style={{ margin:0, color:"#9ca3af" }}>
               Book a walkthrough or send plans — we’ll price it fast.
             </p>
           </div>
@@ -100,4 +98,3 @@ export default function Home() {
     </div>
   );
 }
-
