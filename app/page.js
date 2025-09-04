@@ -71,6 +71,7 @@ const copy = {
       phone: "Phone",
       message: "Project details",
       submit: "Send",
+      facebook: "Connect with us on Facebook",
     },
     footer: { rights: "All rights reserved." },
   },
@@ -131,6 +132,7 @@ const copy = {
       phone: "Teléfono",
       message: "Detalles del proyecto",
       submit: "Enviar",
+      facebook: "Conéctanos en Facebook",
     },
     footer: { rights: "Todos los derechos reservados." },
   },
@@ -282,6 +284,20 @@ export default function Page() {
                   {t.contact.submit} <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
+                      {/* Facebook button */}
+{t.contact.facebook && (
+  <div className="mt-6">
+    <a
+      href="https://www.facebook.com/share/16sx3nwB4N/?mibextid=wwXIfr"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn-primary inline-flex items-center gap-2"
+    >
+      📘 {t.contact.facebook}
+    </a>
+  </div>
+)}
+
             </div>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm space-y-4">
