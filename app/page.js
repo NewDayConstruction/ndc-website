@@ -52,10 +52,7 @@ const copy = {
         },
       ],
     },
-    projects: {
-      title: "Recent Projects",
-      note: "Real projects from the West & South Sides — more photos coming soon.",
-    },
+   
     about: {
       title: "Built for our community",
       body:
