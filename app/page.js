@@ -48,7 +48,7 @@ const copy = {
         {
           icon: <Hammer className="w-6 h-6" />,
           title: "General Construction",
-          desc: "Small projects: carpentry, doors, decks, punch-list, and insurance repairs with clear scopes and timelines.",
+          desc: "Small projects: punch-list, and insurance repairs with clear scopes and timelines.",
         },
       ],
     },
@@ -405,7 +405,7 @@ export default function Page() {
                 <MapPin className="w-5 h-5 mt-1" />{" "}
                 <div>
                   <div className="font-semibold">Office</div>
-                  <div className="text-neutral-600">1407 S Tripp Ave, Chicago, IL</div>
+                  <div className="text-neutral-600"> Chicago, IL</div>
                 </div>
               </div>
             </div>
