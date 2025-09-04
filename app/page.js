@@ -54,7 +54,7 @@ const copy = {
     },
     projects: {
       title: "Recent Projects",
-      note: "Real projects from the West & South Sides — more photos coming soon.",
+      note: "photos coming soon.",
     },
     about: {
       title: "Built for our community",
@@ -74,6 +74,7 @@ const copy = {
       phone: "Phone",
       message: "Project details",
       submit: "Send",
+      facebook: "https://www.facebook.com/share/16sx3nwB4N/?mibextid=wwXIfr",
     },
     footer: { rights: "All rights reserved." },
   },
@@ -134,6 +135,7 @@ const copy = {
       phone: "Teléfono",
       message: "Detalles del proyecto",
       submit: "Enviar",
+      facebook: "https://www.facebook.com/share/16sx3nwB4N/?mibextid=wwXIfr",
     },
     footer: { rights: "Todos los derechos reservados." },
   },
