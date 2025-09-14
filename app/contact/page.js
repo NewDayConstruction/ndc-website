@@ -28,11 +28,24 @@ export default function Contact() {
     <div className="section">
       <h2>Contact</h2>
 
-      <form onSubmit={onSubmit} className="card" style={{ display: "grid", gap: 12, maxWidth: 560 }}>
-        <label> Name<input name="name" placeholder="Full name" required /></label>
-        <label> Email<input type="email" name="email" placeholder="you@email.com" required /></label>
-        <label> Phone<input name="phone" placeholder="(773) 000-0000" /></label>
-        <label> Message<textarea name="message" rows={5} placeholder="Tell us about your project..." /></label>
+     <form
+  action="https://formspree.io/f/mayvlwyy"
+  method="POST"
+  className="card"
+  style={{ display:"grid", gap:12, maxWidth:560 }}
+>
+  <input type="hidden" name="_subject" value="New Day Construction — Website Lead" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="hidden" name="_next" value="https://www.newdayconstruction.org/contact?sent=1" />
+> <input name="name" required />
+<input type="email" name="email" required />
+<input name="phone" />
+<textarea name="message" rows={5} />
+<button className="cta" type="submit">Send</button>
+
+  {typeof window!=="undefined" && new URLSearchParams(window.location.search).get("sent")==="1" &&
+  <p style={{color:"#22d3ee"}}>Thanks — we’ll reply shortly.</p>}
 
         <button className="cta" type="submit" disabled={status === "sending"}>
           {status === "sending" ? "Sending..." : "Send"}
